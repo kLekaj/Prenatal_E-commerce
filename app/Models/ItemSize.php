@@ -9,5 +9,8 @@ class ItemSize extends Model
 {
     use HasFactory;
 
+    public function getSizes($itemId){
+        return ItemSize::where('parent_id', $itemId)->get();
+    }
 
 }

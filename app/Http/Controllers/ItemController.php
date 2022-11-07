@@ -35,53 +35,56 @@ class ItemController extends Controller
             ->get()
             ->toArray();
 
-            if (
-                empty($marche_filter_array_to_db) or
-                empty($sesso_filter_array_to_db) or
-                empty($min_price_filter_array_to_db) or
-                empty($max_price_filter_array_to_db) or
-                empty($color_filter_array_to_db)
-            ) {
-                if (!empty($search[0][0])) {
-                    $items = Item::with(['gallery', 'sizes'])
-                        ->whereIn('id', $this->items_id($category_items))
-                        ->where('title', 'LIKE',$search[0][0] . '%')
-                        ->get()
-                        ->paginate(12)
-                        ->toArray();
-                }
-                else{
-                    $items = Item::with(['gallery', 'sizes'])
-                        ->whereIn('id', $this->items_id($category_items))
-                        ->get()
-                        ->paginate(12)
-                        ->toArray();
-                }
-            } else {
-                if (!empty($search[0][0])) {
-                    $items = Item::with(['gallery', 'sizes'])
-                        ->whereIn('id', $this->items_id($category_items))
-                        ->where('marche', $marche_filter_array_to_db)
-                        ->where('genere', $sesso_filter_array_to_db)
-                        ->where('colore', $color_filter_array_to_db)
-                        ->where('title', 'LIKE',$search[0][0] . '%')
-                        ->whereBetween('price', [$min_price_filter_array_to_db, $max_price_filter_array_to_db])
-                        ->get()
-                        ->paginate(12)
-                        ->toArray();
-                }
-                else{
-                    $items = Item::with(['gallery', 'sizes'])
-                        ->whereIn('id', $this->items_id($category_items))
-                        ->where('marche', $marche_filter_array_to_db)
-                        ->where('genere', $sesso_filter_array_to_db)
-                        ->where('colore', $color_filter_array_to_db)
-                        ->whereBetween('price', [$min_price_filter_array_to_db, $max_price_filter_array_to_db])
-                        ->get()
-                        ->paginate(12)
-                        ->toArray();
-                }
+        if (
+            empty($marche_filter_array_to_db) or
+            empty($sesso_filter_array_to_db) or
+            empty($min_price_filter_array_to_db) or
+            empty($max_price_filter_array_to_db) or
+            empty($color_filter_array_to_db)
+        ) {
+            if (!empty($search[0][0])) {
+                $items = Item::with(['gallery', 'sizes'])
+                    ->whereIn('id', $this->items_id($category_items))
+                    ->where('title', 'LIKE',$search[0][0] . '%')
+//                    ->get()
+                    ->paginate(12)
+                    ->toArray();
             }
+            else{
+                $items = Item::with(['gallery', 'sizes'])
+                    ->whereIn('id', $this->items_id($category_items))
+//                    ->get()
+                    ->paginate(12)
+                    ->toArray()
+                ;
+            }
+        }
+        else
+        {
+            if (!empty($search[0][0])) {
+                $items = Item::with(['gallery', 'sizes'])
+                    ->whereIn('id', $this->items_id($category_items))
+                    ->where('marche', $marche_filter_array_to_db)
+                    ->where('genere', $sesso_filter_array_to_db)
+                    ->where('colore', $color_filter_array_to_db)
+                    ->where('title', 'LIKE',$search[0][0] . '%')
+                    ->whereBetween('price', [$min_price_filter_array_to_db, $max_price_filter_array_to_db])
+//                    ->get()
+                    ->paginate(12)
+                    ->toArray();
+            }
+            else{
+                $items = Item::with(['gallery', 'sizes'])
+                    ->whereIn('id', $this->items_id($category_items))
+                    ->where('marche', $marche_filter_array_to_db)
+                    ->where('genere', $sesso_filter_array_to_db)
+                    ->where('colore', $color_filter_array_to_db)
+                    ->whereBetween('price', [$min_price_filter_array_to_db, $max_price_filter_array_to_db])
+//                    ->get()
+                    ->paginate(12)
+                    ->toArray();
+            }
+        }
 
 //        dd( url()->current() . '?page=' . $items['last_page']-1, $items );
 
@@ -271,5 +274,15 @@ class ItemController extends Controller
 
     }
 
+    public function search()
+    {
 
+        $item = Item::where('title', 'LIKE', "%{['title']}%")
+            ->take(25)
+            ->get();
+
+        return [
+            'items' => $item,
+        ];
+    }
 }

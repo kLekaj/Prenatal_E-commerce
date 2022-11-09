@@ -100,7 +100,7 @@ class ItemController extends Controller
         $product_path_url = $this->product_path_url();
 
 //        dd($items['links']);
-        return view('pages/items', [
+        return view('pages/items_page', [
             'categories' => $categories,
             'posts' => $items,
 

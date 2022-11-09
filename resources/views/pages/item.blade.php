@@ -17,22 +17,24 @@
                                     <div class="flex flex-col space-y-2">
                                     </div>
                                 </div>
-                                <div class="lg:-mx-3 -mx-2 lg:-mt-3">
-                                    <div class="w-full lg:w-full flex lg:flex-wrap pb-8">
-                                        @if(empty($item['gallery']))
-                                            <div  class="lg:w-1/2 lg:p-3 w-full px-2">
-                                                <div class="border border-gray-300">
-                                                    <div class=" w-full aspect-3/4">
-                                                        <img class="object-cover w-full foto"
-                                                             alt="Armadio dolce stella - Foppapedretti"
-                                                             src="{{ URL::to('/images/prenatal-product-none.jpeg') }}"
-                                                        >
+                                <div class="lg:hidden swiper mySwiperItem lg:-mx-3 -mx-2 lg:-mt-3">
+                                    <div class="swiper-wrapper w-full lg:w-full flex lg:flex-wrap pb-8">
+                                        @if(count($item['gallery']) < 4)
+                                            @foreach($item['gallery'] as $k=>$i)
+                                                <div  class="lg:w-1/2 lg:p-3 w-full px-2 swiper-slide">
+                                                    <div class="border border-gray-300 h-full ">
+                                                        <div class=" w-full aspect-3/4">
+                                                            <img
+                                                                    class=" object-cover w-full h-full"
+                                                                    alt="{{ $i['item_id'] }}"
+                                                                    src={{ $i['image'] }}>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @endforeach
                                         @else
                                             @foreach($item['gallery'] as $k=>$i)
-                                                <div  class="lg:w-1/2 lg:p-3 w-full px-2">
+                                                <div  class="swiper-slide  lg:w-1/2 lg:p-3 w-full px-2">
                                                     <div class="border border-gray-300 h-full ">
                                                         <div class=" w-full aspect-3/4">
                                                             <img
@@ -45,7 +47,78 @@
                                             @endforeach
                                         @endif
                                     </div>
+                                    <div class="z-10 flex justify-between items-center absolute left-0 transform top-1/2 -translate-y-1/2 right-0  lg:hidden">
+                                        <button class="sliderPrevItem p-3 rounded-full text-[#E72B6F] active:ring-4 ring-[#E72B6F]/40">
+                                            <svg class="svg-icon w-5 h-5" viewBox="0 0 20 20">
+                                                <path fill="#E72B6F" d="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="sliderNextItem p-3 rounded-full text-[#E72B6F] active:ring-4 ring-[#E72B6F]/40">
+                                            <svg class="svg-icon w-5 h-5" viewBox="0 0 20 20">
+                                                <path fill="#E72B6F" d="M11.611,10.049l-4.76-4.873c-0.303-0.31-0.297-0.804,0.012-1.105c0.309-0.304,0.803-0.293,1.105,0.012l5.306,5.433c0.304,0.31,0.296,0.805-0.012,1.105L7.83,15.928c-0.152,0.148-0.35,0.223-0.547,0.223c-0.203,0-0.406-0.08-0.559-0.236c-0.303-0.309-0.295-0.803,0.012-1.104L11.611,10.049z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
+
+
+                                <div class="md:hidden hidden lg:block lg:-mx-3 lg:-mt-3">
+                                    <div class="swiper-wrapper w-full lg:w-full flex lg:flex-wrap pb-8">
+                                        @if(count($item['gallery']) < 4)
+                                            @foreach($item['gallery'] as $k=>$i)
+                                                <div  class="lg:w-1/2 lg:p-3 w-full px-2 swiper-slide">
+                                                    <div class="border border-gray-300 h-full ">
+                                                        <div class=" w-full aspect-3/4">
+                                                            <img
+                                                                    class=" object-cover w-full h-full"
+                                                                    alt="{{ $i['item_id'] }}"
+                                                                    src={{ $i['image'] }}>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            <div  class="lg:w-1/2 lg:p-3 w-full px-2 swiper-slide">
+                                                <div class="border border-gray-300">
+                                                    <div class=" w-full aspect-3/4">
+                                                        <img class="object-cover w-full"
+                                                             alt="Armadio dolce stella - Foppapedretti"
+                                                             src="{{ URL::to('/images/prenatal-product-none.jpeg') }}"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            @foreach($item['gallery'] as $k=>$i)
+                                                <div  class="swiper-slide  lg:w-1/2 lg:p-3 w-full px-2">
+                                                    <div class="border border-gray-300 h-full ">
+                                                        <div class=" w-full aspect-3/4">
+                                                            <img
+                                                                    class=" object-cover w-full h-full"
+                                                                    alt="{{ $i['item_id'] }}"
+                                                                    src={{ $i['image'] }}>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="z-10 flex justify-between items-center absolute left-0 transform top-1/2 -translate-y-1/2 right-0  lg:hidden">
+                                        <button class="sliderPrevItem p-3 rounded-full text-[#E72B6F] active:ring-4 ring-[#E72B6F]/40">
+                                            <svg class="svg-icon w-5 h-5" viewBox="0 0 20 20">
+                                                <path fill="#E72B6F" d="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="sliderNextItem p-3 rounded-full text-[#E72B6F] active:ring-4 ring-[#E72B6F]/40">
+                                            <svg class="svg-icon w-5 h-5" viewBox="0 0 20 20">
+                                                <path fill="#E72B6F" d="M11.611,10.049l-4.76-4.873c-0.303-0.31-0.297-0.804,0.012-1.105c0.309-0.304,0.803-0.293,1.105,0.012l5.306,5.433c0.304,0.31,0.296,0.805-0.012,1.105L7.83,15.928c-0.152,0.148-0.35,0.223-0.547,0.223c-0.203,0-0.406-0.08-0.559-0.236c-0.303-0.309-0.295-0.803,0.012-1.104L11.611,10.049z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+
+
+
                             </div>
                         </div>
                         <div class="self-start w-full lg:sticky lg:top-0 lg:pt-5 lg:max-w-sm" style="top: 169px">
@@ -189,6 +262,7 @@
                                         </form>
                                     </div>
                                 </div>
+                                <div class="md:block swiper-paginationItem absolute top-[105%] flex justify-center"></div>
                             </div>
                             <div class="font-normal text-base mt-6 mb-6">
                                 <div class="flex justify-start flex-col mt-6">
@@ -262,33 +336,30 @@
 
 
             <script>
-                var swiper = new Swiper(".mySwiper111", {
+                var swiper = new Swiper(".mySwiperItem", {
                     slidesPerView: 1,
                     loopedSlides:9,
                     breakpoints:{
                         768:{
-                            slidesPerView: 1,
+                            slidesPerView: 2,
                             loop: true
                         },
-                        480:{
-                            slidesPerView: 1,
-                            loop: true
-                        }
                     },
                     pagination: {
-                        el: ".swiper-pagination111",
+                        el: ".swiper-paginationItem",
                         clickable: true,
                     },
+                    autoplay: {
+                        delay: 2000,
+                        disableOnInteraction: false,
+                    },
                     navigation: {
-                        nextEl: ".sliderNext111",
-                        prevEl: ".sliderPrev111",
+                        nextEl: ".sliderNextItem",
+                        prevEl: ".sliderPrevItem",
                         clickable: true,
                     },
                 });
             </script>
-
-
-
 
 
         @endsection

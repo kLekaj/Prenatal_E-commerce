@@ -89,9 +89,9 @@
                                             @if( strtolower($sub['name']) === str_replace('-',' ',$path_url[2]) )
                                                 <div class="flex flex-col bg-white shadow-lg divide-y divide-gray-200">
                                                     <a
-                                                        href="http://127.0.0.1:8000/categoria-prodotto/{{ $path_url[1] }}/{{ $path_url[2] }}/{{ str_replace(' ','-',strtolower($s['name'])) }}"
+                                                        href="http://127.0.0.1:8000/categoria-prodotto/{{ $path_url[1] }}/{{ $path_url[2] }}/{{ str_replace(['(',')','/', '+',','],'',str_replace([' '], '-', Str::lower($s['name'])))  }}"
                                                         class="font-normal text-base w-full px-5 py-2 hover:text-[#E72B6F] text-pnt-black">
-                                                        {{ $s['name'] }}
+                                                        {{ str_replace('-',' ',$s['name']) }}
                                                     </a>
                                                 </div>
                                             @endif

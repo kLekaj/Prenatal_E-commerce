@@ -13,10 +13,8 @@
 
         @include('components.la_nosta_experienca')
 
-        {{--        carosel problem--}}
         @include('components.categorie_in_evidenca')
 
-        {{--        carosel problem--}}
 
         @include('components.il_nostri_brand')
 

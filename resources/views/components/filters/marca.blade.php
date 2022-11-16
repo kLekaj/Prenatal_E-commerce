@@ -50,12 +50,12 @@
                                                 name="filter_taglia[]"
                                                 value="{{ $m }}"
                                                 type="checkbox"
+
+                                                @if( in_array($m, $checked)) checked="checked" @endif
 {{--                                                onChange="this.form.submit()" {{ request()->filled('category_id.samsung') ? 'checked' :''}}--}}
                                             >
                                         </div>
-                                        @if( in_array($m, $checked))
-                                            checked
-                                        @endif
+
                                         <div class="relative flex-1">
                                             <span class="font-normal text-base text-gray-900">
                                                 {{ $m }}
@@ -85,178 +85,6 @@
     </div>
     @endif
 
-    {{--    prezzo and disponibilita--}}
-    <div x-data="{ show: false }">
-        <div class="inline-block relative">
-            <button
-                @click="show = !show"
-                :aria-expanded="show ? 'true' : 'false'"
-                @click="selec !== 1 ? selec = 1 : selec = null"
-                type="button"
-                class="block pointer-events-auto w-full mr-3 text-xs font-regular text-gray-700 bg-white border border-gray-400 hover:border-gray-400 hover:bg-gray-400 hover:text-white px-4 py-2 pr-8 rounded-full leading-tight focus:outline-none">
-                <span> Prezzo & disponibilita</span>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
-                    </svg>
-                </div>
-            </button>
-        </div>
-
-        <div
-            x-show="show"
-            @click.away="show = false"
-{{--            class="bg-white border border-gray-50 shadow-xl rounded absolute left-0 right-0  duration-50 ease-in transition  mt-2 z-50">--}}
-            class="bg-white border border-gray-50 shadow-xl rounded absolute left-0 right-0 w-full transform ease-in transition translate-y-0 z-50 top-full mt-2 opacity-100 pointer-events-auto duration-150">
-
-            <div class="flex flex-wrap -mx-3 -mt-4">
-
-                <div class="px-3 pt-4">
-                    <div class="px-5 pt-5">
-                        <span class="block font-medium text-[#E72B6F] text-lg mb-2">Filtra per disponibilità</span>
-                    </div>
-
-                    <div class="max-h-96 overflow-y-auto" >
-                        <div class="px-5 pb-4">
-                            <div class="flex justify-start flex-wrap -ml-4">
-                                <div class="ml-4" style="min-width: 200px">
-                                    <div class="block">
-
-
-                                        <div data-component="switch"  class="flex items-center w-full relative">
-                                            <span>Disponibile online</span>
-
-                                            <label class="switch ml-4">
-                                                <input class="hidden" type="checkbox"  value="1">
-
-                                                <span class="slider round relative border border-gray-200 rounded-full px-1 py-1 flex items-center">
-                                                    <span class="teksti uppercase cursor-pointer font-medium text-xs px-2 py-1 bg-transparent text-gray-400 rounded-full z-20 transition-all duration-100 ease-in"
-                                                          id="first">
-                                                        No
-                                                    </span>
-                                                    <span class="uppercase cursor-pointer font-medium text-xs px-3 py-1 bg-trasnparent text-gray-400 rounded-full z-20 transition-all duration-100 ease-in"
-                                                          id="second">
-                                                        Si
-                                                    </span>
-                                                </span>
-                                            </label>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="px-3 pt-4">
-                    <div class="max-h-96">
-                        <div class="px-5 pb-4 pt-5">
-                            <div class="flex justify-start flex-wrap -ml-4 -mt-4">
-                                <div class="ml-4 mt-4" style="min-width: 200px">
-                                    <span class="block font-medium text-[#E72B6F] text-lg">
-                                        Filtra per prezzo
-                                    </span>
-                                    <span class="hidden">Filtra per prezzo</span>
-                                    <div style="min-width: 160px">
-                                        <div class=" flex justify-center items-center py-5">
-                                            <div x-data="range()" x-init="mintrigger(); maxtrigger()" class="relative max-w-xl w-full">
-
-                                                <div>
-                                                    <input
-                                                        type="range"
-                                                        step="100"
-                                                        x-bind:min="min"
-                                                        x-bind:max="max"
-                                                        x-on:input="mintrigger"
-                                                        x-model="minprice"
-                                                        class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer">
-
-                                                    <input
-                                                        type="range"
-                                                        step="100"
-                                                        x-bind:min="min"
-                                                        x-bind:max="max"
-                                                        x-on:input="maxtrigger"
-                                                        x-model="maxprice"
-                                                        class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer">
-
-                                                    <div class="relative z-10 h-2 ">
-
-                                                        <div class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md h-[2px] bg-gray-200"></div>
-
-                                                        <div class="absolute z-20 top-0 bottom-0 rounded-md bg-[#E72B6F] h-[2px]"
-                                                             x-bind:style="'right:'+maxthumb+'%; left:'+minthumb+'%'"></div>
-
-                                                        <div class="absolute z-30 w-[16px] h-[16px] border-[2px] top-0 left-0 border-[#E72B6F] rounded-full -mt-2 bg-white"
-                                                             x-bind:style="'left: '+minthumb+'%'"></div>
-
-                                                        <div class="absolute z-30 w-[16px] h-[16px] border-[2px] top-0 right-0 border-[#E72B6F] rounded-full -mt-2 bg-white -mr-3"
-                                                             x-bind:style="'right: '+maxthumb+'%'"></div>
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="flex justify-between items-center py-2">
-                                                    <div>
-                                                        @php
-                                                            $checked = [];
-                                                            if( isset($_GET['filter_min_prezzo'])){
-                                                                $checked = $_GET['filter_min_prezzo'];
-                                                            }
-                                                        @endphp
-                                                        <input
-                                                            type="text"
-                                                            maxlength="5"
-                                                            x-on:input="mintrigger"
-                                                            name="filter_min_prezzo[]"
-                                                            x-model="minprice"
-                                                            class=" border border-gray-200 rounded w-[50px] p-[3px] text-center">
-                                                    </div>
-                                                    @php
-                                                        $checked = [];
-                                                        if( isset($_GET['filter_max_prezzo'])){
-                                                            $checked = $_GET['filter_max_prezzo'];
-                                                        }
-                                                    @endphp
-                                                    <div>
-                                                        <input
-                                                            type="text"
-                                                            name="filter_max_prezzo[]"
-                                                            maxlength="5"
-                                                            x-on:input="maxtrigger"
-                                                            x-model="maxprice"
-                                                            class=" border border-gray-200 rounded w-[50px] p-[3px] text-center">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w-full px-3">
-                    <div class="px-5 py-3 border-t border-gray-100">
-                        <button class="inline-flex uppercase justify-center items-center text-center rounded-full px-5 border transition delay-150 duration-150 ease-in-out focus:outline-none text-sm py-1 px-3 bg-[#E72B6F] text-white border-[#E72B6F] hover:bg-white hover:text-[#E72B6F] focus:bg-white focus:text-[#E72B6F] focus:shadow-outline-[#E72B6F] cursor-pointer" data-disabled-classes="bg-gray-300 text-white border-gray-300 pointer-events-none cursor-not-allowed" data-enabled-classes="bg-[#E72B6F] text-white border-[#E72B6F] hover:bg-white hover:text-[#E72B6F] focus:bg-white focus:text-[#E72B6F] focus:shadow-outline-[#E72B6F] cursor-pointer"
-                                type="submit">
-                            <span class="button-text">
-                                <span class="px-4">
-                                    Applica
-                                </span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     {{--    marca --}}
@@ -305,7 +133,7 @@
                                                     name="filter_marche[]"
                                                     value="{{ $m }}"
                                                     type="checkbox"
-                                                    {{--                                                onChange="this.form.submit()" {{ request()->filled('category_id.samsung') ? 'checked' :''}}--}}
+                                                    @if( in_array($m, $checked)) checked="checked" @endif
                                                 >
                                             </div>
 {{--                                            @if( in_array($m, $checked))--}}
@@ -386,11 +214,9 @@
                                                     name="filter_sesso[]"
                                                     value="{{ $m }}"
                                                     type="checkbox"
+                                                    @if( in_array($m, $checked)) checked="checked" @endif
                                                 >
                                             </div>
-                                            @if( in_array($m, $checked))
-                                                checked
-                                            @endif
                                             <div class="relative flex-1">
                                             <span class="font-normal text-base text-gray-900">
                                                 {{ $m }}
@@ -472,7 +298,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-ed30729549c9852aac97bd8473a22b43  form-checkbox-secondary  w-5 h-5"
                                                 value="azzurro"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("azzurro", $checked)) checked="checked" @endif
+                                            >
                                         </div>
 
                                         <div class="relative flex-1">
@@ -504,7 +332,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-bfdf210cd1b105a5df2072389404edeb  form-checkbox-secondary  w-5 h-5"
                                                 value="beige"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("beige", $checked)) checked="checked" @endif
+                                            >
                                         </div>
 
                                         <div class="relative flex-1">
@@ -538,7 +368,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-54922f2e920ba8346f6dc0fba343d673  form-checkbox-secondary  w-5 h-5"
                                                 value="bianco"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("bianco", $checked)) checked="checked" @endif
+                                            >
                                         </div>
 
                                         <div class="relative flex-1">
@@ -571,7 +403,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-e310d39cbd68145645b89b892116dbbd  form-checkbox-secondary  w-5 h-5"
                                                 value="blue"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("blue", $checked)) checked="checked" @endif
+                                            >
                                         </div>
 
                                         <div class="relative flex-1">
@@ -610,7 +444,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-04d885c511dd0c2eb61bff08dee8df80  form-checkbox-secondary  w-5 h-5"
                                                 value="denim"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("denim", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -647,7 +483,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-54922f2e920ba8346f6dc0fba343d673  form-checkbox-secondary  w-5 h-5"
                                                 value="fantasia"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("fantasia", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -684,7 +522,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-c7522a95838a32a66304710be8a7055d  form-checkbox-secondary  w-5 h-5"
                                                 value="giallo"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("giallo", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -721,7 +561,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-efd5b71d20771d551e9eb2a6882326a0  form-checkbox-secondary  w-5 h-5"
                                                 value="grigio"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("grigio", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -758,7 +600,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-8b3bfd0b1bbc9e9d1152145a37c87c87  form-checkbox-secondary  w-5 h-5"
                                                 value="marrone"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("marrone", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -795,7 +639,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-5880b1242eab52159e8a8c2aa4f2bcf0  form-checkbox-secondary  w-5 h-5"
                                                 value="naturale"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("naturale", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -834,7 +680,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-77e774e6cc4d94d6a32f6256f02d9552  form-checkbox-secondary  w-5 h-5"
                                                 value="nero"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("nero", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -871,7 +719,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-7470511e86b073a033bfd364034d2bcb  form-checkbox-secondary  w-5 h-5"
                                                 value="panna"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("panna", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -902,7 +752,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-672a01a77fc5fa62ea5c6de830781c89  form-checkbox-secondary  w-5 h-5"
                                                 value="rosa"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("rosa", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -939,7 +791,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-66ae4c7ea8ab330e4593d98ca3185475  form-checkbox-secondary  w-5 h-5"
                                                 value="rosso"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("rosso", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -976,7 +830,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-54922f2e920ba8346f6dc0fba343d673  form-checkbox-secondary  w-5 h-5"
                                                 value="senza-colore"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("senza-colore", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -1013,7 +869,9 @@
                                                 type="checkbox"
                                                 class="form-checkbox form-checkbox-color-367ef27272ca8e9a57241be4c80793d5  form-checkbox-secondary  w-5 h-5"
                                                 value="verde"
-                                                name="filter_color[]">
+                                                name="filter_color[]"
+                                                @if( in_array("verde", $checked)) checked="checked" @endif
+                                            >
                                         </div>
                                         <div class="relative flex-1">
                                         <span class="font-normal text-base text-gray-900">
@@ -1040,6 +898,177 @@
         </div>
     </div>
 
+    {{--    prezzo and disponibilita--}}
+    <div x-data="{ show: false }">
+        <div class="inline-block relative">
+            <button
+                    @click="show = !show"
+                    :aria-expanded="show ? 'true' : 'false'"
+                    @click="selec !== 1 ? selec = 1 : selec = null"
+                    type="button"
+                    class="block pointer-events-auto w-full mr-3 text-xs font-regular text-gray-700 bg-white border border-gray-400 hover:border-gray-400 hover:bg-gray-400 hover:text-white px-4 py-2 pr-8 rounded-full leading-tight focus:outline-none">
+                <span> Prezzo & disponibilita</span>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+                    </svg>
+                </div>
+            </button>
+        </div>
+
+        <div
+                x-show="show"
+                @click.away="show = false"
+                class="bg-white border border-gray-50 shadow-xl rounded absolute left-0 right-0 w-full transform ease-in transition translate-y-0 z-50 top-full mt-2 opacity-100 pointer-events-auto duration-150">
+
+            <div class="flex flex-wrap -mx-3 -mt-4">
+
+                <div class="px-3 pt-4">
+                    <div class="px-5 pt-5">
+                        <span class="block font-medium text-[#E72B6F] text-lg mb-2">Filtra per disponibilità</span>
+                    </div>
+
+                    <div class="max-h-96 overflow-y-auto" >
+                        <div class="px-5 pb-4">
+                            <div class="flex justify-start flex-wrap -ml-4">
+                                <div class="ml-4" style="min-width: 200px">
+                                    <div class="block">
+
+
+                                        <div  class="flex items-center w-full relative">
+                                            <span>Disponibile online</span>
+
+                                            <label class="switch ml-4">
+                                                <input class="hidden" type="checkbox"  value="1">
+
+                                                <span class="slider round relative border border-gray-200 rounded-full px-1 py-1 flex items-center">
+                                                    <span class="teksti uppercase cursor-pointer font-medium text-xs px-2 py-1 bg-transparent text-gray-400 rounded-full z-20 transition-all duration-100 ease-in"
+                                                          id="first">
+                                                        No
+                                                    </span>
+                                                    <span class="uppercase cursor-pointer font-medium text-xs px-3 py-1 bg-trasnparent text-gray-400 rounded-full z-20 transition-all duration-100 ease-in"
+                                                          id="second">
+                                                        Si
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="px-3 pt-4">
+                    <div class="max-h-96">
+                        <div class="px-5 pb-4 pt-5">
+                            <div class="flex justify-start flex-wrap -ml-4 -mt-4">
+                                <div class="ml-4 mt-4" style="min-width: 200px">
+                                    <span class="block font-medium text-[#E72B6F] text-lg">
+                                        Filtra per prezzo
+                                    </span>
+                                    <span class="hidden">Filtra per prezzo</span>
+                                    <div style="min-width: 160px">
+                                        <div class=" flex justify-center items-center py-5">
+                                            <div x-data="range()" x-init="mintrigger(); maxtrigger()" class="relative max-w-xl w-full">
+
+                                                <div>
+                                                    <input
+                                                            type="range"
+                                                            step="100"
+                                                            x-bind:min="min"
+                                                            x-bind:max="max"
+                                                            x-on:input="mintrigger"
+                                                            x-model="minprice"
+                                                            class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer">
+
+                                                    <input
+                                                            type="range"
+                                                            step="100"
+                                                            x-bind:min="min"
+                                                            x-bind:max="max"
+                                                            x-on:input="maxtrigger"
+                                                            x-model="maxprice"
+                                                            class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer">
+
+                                                    <div class="relative z-10 h-2 ">
+
+                                                        <div class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md h-[2px] bg-gray-200"></div>
+
+                                                        <div class="absolute z-20 top-0 bottom-0 rounded-md bg-[#E72B6F] h-[2px]"
+                                                             x-bind:style="'right:'+maxthumb+'%; left:'+minthumb+'%'"></div>
+
+                                                        <div class="absolute z-30 w-[16px] h-[16px] border-[2px] top-0 left-0 border-[#E72B6F] rounded-full -mt-2 bg-white"
+                                                             x-bind:style="'left: '+minthumb+'%'"></div>
+
+                                                        <div class="absolute z-30 w-[16px] h-[16px] border-[2px] top-0 right-0 border-[#E72B6F] rounded-full -mt-2 bg-white -mr-3"
+                                                             x-bind:style="'right: '+maxthumb+'%'"></div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="flex justify-between items-center py-2">
+                                                    <div>
+                                                        @php
+                                                            $checked = [];
+                                                            if( isset($_GET['filter_min_prezzo'])){
+                                                                $checked = $_GET['filter_min_prezzo'];
+                                                            }
+                                                        @endphp
+                                                        <input
+                                                                type="text"
+                                                                maxlength="5"
+                                                                x-on:input="mintrigger"
+                                                                name="filter_min_prezzo[]"
+                                                                x-model="minprice"
+                                                                class=" border border-gray-200 rounded w-[50px] p-[3px] text-center">
+                                                    </div>
+                                                    @php
+                                                        $checked = [];
+                                                        if( isset($_GET['filter_max_prezzo'])){
+                                                            $checked = $_GET['filter_max_prezzo'];
+                                                        }
+                                                    @endphp
+                                                    <div>
+                                                        <input
+                                                                type="text"
+                                                                name="filter_max_prezzo[]"
+                                                                maxlength="5"
+                                                                x-on:input="maxtrigger"
+                                                                x-model="maxprice"
+                                                                class=" border border-gray-200 rounded w-[50px] p-[3px] text-center">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full px-3">
+                    <div class="px-5 py-3 border-t border-gray-100">
+                        <button class="inline-flex uppercase justify-center items-center text-center rounded-full px-5 border transition delay-150 duration-150 ease-in-out focus:outline-none text-sm py-1 px-3 bg-[#E72B6F] text-white border-[#E72B6F] hover:bg-white hover:text-[#E72B6F] focus:bg-white focus:text-[#E72B6F] focus:shadow-outline-[#E72B6F] cursor-pointer" data-disabled-classes="bg-gray-300 text-white border-gray-300 pointer-events-none cursor-not-allowed" data-enabled-classes="bg-[#E72B6F] text-white border-[#E72B6F] hover:bg-white hover:text-[#E72B6F] focus:bg-white focus:text-[#E72B6F] focus:shadow-outline-[#E72B6F] cursor-pointer"
+                                type="submit">
+                            <span class="button-text">
+                                <span class="px-4">
+                                    Applica
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

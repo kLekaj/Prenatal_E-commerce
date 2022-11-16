@@ -4,7 +4,7 @@
     @endsection
 
     @section('slot')
-        @include('components/category-path')
+        @include('components/category-paths')
 
 
         {{--    @include('components/category')--}}

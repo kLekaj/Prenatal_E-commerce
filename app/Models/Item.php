@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,7 +23,6 @@ class Item extends Model
     {
         return $this->hasMany(ItemSize::class, 'parent_id');
     }
-
     public function getCurrentItem($link){
 
         return Item::with(['gallery', 'sizes'])
@@ -32,6 +30,5 @@ class Item extends Model
             ->first()
             ->toArray();
     }
-
 
 }

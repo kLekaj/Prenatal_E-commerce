@@ -48,16 +48,17 @@
 
 
             <form data-form="login" method="POST"  class="px-3 md:px-8 mt-6 space-y-4">
+                @csrf
                 <!-- Email Address -->
                 <div class="relative z-0 w-full mb-5 ">
                     <input
                         type="email"
-                        name="name"
+                        name="email"
                         placeholder=" "
                         required
                         class="block w-full px-4 pt-3 pb-2 rounded-md bg-transparent border border-gray-300 focus:border-gray-500 ring-transparent ring-1 focus:ring-gray-500 outline-none read-only:opacity-100 "
                     />
-                    <label for="name" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Email</label>
+                    <label for="email" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Email</label>
                     <span class="text-sm text-red-600 hidden" id="error">Email is required</span>
                 </div>
 
@@ -66,12 +67,12 @@
                         <div class="relative z-0 w-full flex-1">
                             <input
                                 type="password"
-                                name="name"
+                                name="password"
                                 placeholder=" "
                                 required
                                 class="block w-full px-4 pt-3 pb-2 rounded-md bg-transparent border border-gray-300 focus:border-gray-500 ring-transparent ring-1 focus:ring-gray-500 outline-none read-only:opacity-100 "
                             />
-                            <label for="name" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Password</label>
+                            <label for="password" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Password</label>
                             <span class="text-sm text-red-600 hidden" id="error">Password is required</span>
                             <button class="absolute top-3 right-0 pr-4 flex items-center" type="button" tabindex="-1" data-toggle-show-password="#password" data-password-status="PASSWORD">
                                 <svg data-password-showed="" class="hidden w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">

@@ -8,7 +8,7 @@
 
 
 
-        <div class="lg:hidden">
+        <div class="hidden">
             @include('components.filters.phone')
         </div>
 
@@ -16,7 +16,7 @@
         <div>
             <div class="flex items-center justify-center lg:justify-end">
                 <div class="mr-2 flex">
-                    <span class="whitespace-nowrap font-medium text-[#E72B6F] text-xs md:text-sm"> {{ $posts['total'] }}</span>
+                    <span class="whitespace-nowrap font-medium text-[#E72B6F] text-xs md:text-sm"> {{ $items['total'] }}</span>
                     <span class="whitespace-nowrap font-normal text-pnt-black text-xs md:text-sm ml-1"> ordinati per</span>
                 </div>
                 <div>

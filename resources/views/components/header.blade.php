@@ -1,23 +1,33 @@
 <div class="w-full h-12flex justify-between items-center lg:bg-white lg:hidden bg-[#E72B6F] md:h-16">
 
 <div class="w-[90%] mx-5 mx-auto md:w-[85%]">
-
     <div class="  mx-auto flex items-center  ">
     {{--        hamburger logo and location logo--}}
-        <div class="-mx-2  lg:hidden flex flex-grow flex-shrink flex-1"  x-data="{showMenu : false}">
+        <div
+                class="-mx-2  lg:hidden flex flex-grow flex-shrink flex-1"
+                x-data="{showMenu : false}">
             <!--burger menu for categories-->
-            <button @click.prevent="showMenu = !showMenu " class="px-2 py-4 flex justify-between ">
+            <button
+                    @click.prevent="showMenu = !showMenu "
+                    class="px-2 py-4 flex justify-between ">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24.001" height="17" viewBox="0 0 24.001 17" class="text-white lg:fill-current w-6 h-6">
                     <g data-name="Group 593">
                         <path data-name="Path 683" d="M1.5 14h21a1.5 1.5 0 110 3h-21a1.5 1.5 0 010-3zm21-11h-21a1.5 1.5 0 010-3h21a1.5 1.5 0 110 3zm0 7h-21a1.5 1.5 0 010-3h21a1.5 1.5 0 110 3z" fill="currentColor" fill-rule="evenodd"></path>
                     </g>
                 </svg>
             </button>
-            <div x-show="showMenu" class="fixed w-full top-0 left-0 bottom-px z-50 pointer-events-auto opacity-100" >
+
+
+            <div
+                    x-show="showMenu"
+                    class="fixed w-full top-0 left-0 bottom-px z-50 pointer-events-auto opacity-100" >
                 <div class="absolute inset-0 bg-black bg-opacity-50 transition delay-75 duration-200"></div>
-                <div   class="absolute bottom-0 top-0 left-0 bg-white max-w-2xl w-11/12 transform transition duration-300 ease-in ">
+                <div class="absolute bottom-0 top-0 left-0 bg-white max-w-2xl w-11/12 transform transition duration-300 ease-in ">
+
                     <div class="absolute top-0  transform  right-0 translate-x-full">
-                        <button @click.prevent="showMenu = !showMenu" class="js-menu-trigger inline-flex items-center justify-center py-2 px-1 md:px-2 text-white focus:text-white focus:outline-none">
+                        <button
+                                @click.prevent="showMenu = !showMenu"
+                                class="js-menu-trigger inline-flex items-center justify-center py-2 px-1 md:px-2 text-white focus:text-white focus:outline-none">
                             <span class="sr-only">Close Menu</span>
                             <svg height="24" x-show="open" viewBox="0 0 24 24" width="24" fill="white" class="w-6 h-6">
                                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
@@ -28,34 +38,65 @@
                     <div class="absolute inset-0  ">
                         <div  class="flex flex-col justify-between h-full">
                             <!--             top of the menu-->
-                            <div class="block">
-                                <div class="block p-6">
-                                    <div class="flex items-center border-b border-gray-700">
-                                        <div class="flex-1 pr-2">
-                                            <button class="js-mobile-search-open-btn text-left block  border-none w-full text-base text-black placeholder-black h-10 leading-tight focus:outline-none" type="button">
-                                                <span>Che prodotto stai cercando?</span>
-                                                <span class="sr-only">Cerca</span>
-                                            </button>
-                                        </div>
-                                        <div class="flex-shrink-0">
-                                            <button title="Cerca" class="js-mobile-search-open-btn block  border-transparent py-2 px-2 rounded focus:bg-transparent focus:outline-none" type="button">
-                                                <span class="sr-only">Cerca</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="22.747" height="23.312" viewBox="0 0 22.747 23.312" class="w-6 h-6">
-                                                    <g data-name="Group 597">
-                                                        <path data-name="Path 686" d="M9.33 16.32a6.995 6.995 0 117-7 7 7 0 01-7 7zm5.57.49a9.381 9.381 0 111.68-1.62l5.85 6.15a1.171 1.171 0 01-1.7 1.61z" fill-rule="evenodd"></path>
-                                                    </g>
-                                                </svg>
-                                            </button>
+                            <form action="{{ URL::current() }}" method="GET">
+
+                                <div class="block">
+                                    <div class="block p-6">
+                                        <div class="flex items-center border-b border-gray-700">
+                                            @php
+                                                $checked = [];
+                                                if( isset($_GET['search'])){
+                                                    $checked = $_GET['search'];
+                                                }
+                                            @endphp
+
+                                            <div class="flex-1 pr-2">
+                                                <input class="text-left block  border-none w-full text-base text-black placeholder-black h-10 leading-tight focus:outline-none"
+                                                       type="text"
+                                                       name="search[]"
+                                                       placeholder="Che prodotto stai cercando?" >
+                                            </div>
+
+
+                                            <div class="flex-shrink-0">
+                                                <button title="Cerca" class="js-mobile-search-open-btn block  border-transparent py-2 px-2 rounded focus:bg-transparent focus:outline-none" type="submit">
+                                                    <span class="sr-only">Cerca</span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="22.747" height="23.312" viewBox="0 0 22.747 23.312" class="w-6 h-6">
+                                                        <g data-name="Group 597">
+                                                            <path data-name="Path 686" d="M9.33 16.32a6.995 6.995 0 117-7 7 7 0 01-7 7zm5.57.49a9.381 9.381 0 111.68-1.62l5.85 6.15a1.171 1.171 0 01-1.7 1.61z" fill-rule="evenodd"></path>
+                                                        </g>
+                                                    </svg>
+                                                </button>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                             <!--                    body of the menu-->
+
+
                             <div class="flex-grow flex-shrink overflow-y-auto">
-                                <div class="block">
-                                    <div class="border-t border-gray-200 flex items-center justify-between">
-                                        <a  class="bg-white flex-1 py-5 px-6 font-normal  ">
-                                            <span>Mamma</span>
+                                @foreach($categories as $c)
+                                    @if (
+                                           $c['name'] == 'Mamma'
+                                         or $c['name'] == 'Moda bambina'
+                                         or $c['name'] == 'Casa'
+                                         or $c['name'] == 'Passegginiasd'
+                                         or $c['name'] == 'Auto e viaggio'
+                                         or $c['name'] == 'Gioco'
+                                         or $c['name'] == 'Baby food'
+                                         or $c['name'] == 'Pappa'
+                                         or $c['name'] == 'allattamento'
+                                         or $c['name'] == 'Igiene'
+                                         )
+
+                                    <div class="block">
+                                        <div class="border-t border-gray-200 flex items-center justify-between">
+                                        <a
+                                                href="/categoria-prodotto/{{ str_replace(' ', '-', Str::lower($c['name'])) }}"
+                                                class="bg-white flex-1 py-5 px-6 font-normal  ">
+                                            <span>{{ $c['name'] }}</span>
                                         </a>
                                         <div class=" bg-red-100 h-[100%] " x-data="{showMenu : false}">
                                             <button @click.prevent="showMenu = !showMenu " class="py-5 px-6 bg-white focus:outline-none" aria-label="Open Submenu">
@@ -71,68 +112,94 @@
                                                     <div class="absolute inset-0  ">
                                                         <div  class="flex flex-col justify-between h-full">
                                                             <!--                                                        top of the menu-->
-                                                            <div class="block ">
-                                                                <div class="flex items-center justify-between">
-                                                                    <button @click.prevent="showMenu = !showMenu" class="py-5 px-5 focus:outline-none" aria-label="Chiudi " >
-                                                                        <span class="sr-only">Chiudi Mamma</span>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24" stroke="currentColor" class="w-6 h-6 text-[#E72B6F] stroke-2">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                                                                        </svg>
-                                                                    </button>
-                                                                    <a  class="font-bold text-lg text-[#E72B6F] uppercase m-auto py-5 px-6" title="Mamma" aria-label="Mamma">
-                                                                        <span class="m-auto">Mamma</span>
-                                                                    </a>
-                                                                    <div class="w-12"></div>
-                                                                </div>
-                                                            </div>
-                                                            <!--                                                       menu of the menu-->
-                                                            <div class="flex-grow flex-shrink overflow-y-auto">
-                                                                <div class="block">
-                                                                    <div class="border-t border-gray-200 flex items-center justify-between">
-                                                                        <a  class="bg-white flex-1 py-5 px-6 font-normal  ">
-                                                                            <span>Abbigliamento</span>
+
+                                                                <div class="block ">
+                                                                    <div class="flex items-center justify-between">
+                                                                        <button @click.prevent="showMenu = !showMenu" class="py-5 px-5 focus:outline-none" aria-label="Chiudi " >
+                                                                            <span class="sr-only">Chiudi {{ $c['name'] }}</span>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24" stroke="currentColor" class="w-6 h-6 text-[#E72B6F] stroke-2">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                                                            </svg>
+                                                                        </button>
+                                                                        <a
+                                                                                class="font-bold text-lg text-[#E72B6F] uppercase m-auto py-5 px-6">
+                                                                            <span class="m-auto">
+                                                                                {{ $c['name'] }}
+                                                                            </span>
                                                                         </a>
-                                                                        <div class=" bg-red-100 h-[100%] " x-data="{showMenu : false}">
-                                                                            <button @click.prevent="showMenu = !showMenu " class="py-5 px-6 bg-white focus:outline-none" aria-label="Open Submenu">
-                                                                                <span class="sr-only">Apri  Mamma</span>
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24" stroke="currentColor" class="w-6 h-6 text-[#E72B6F]">
-                                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                                                                </svg>
-                                                                            </button>
+                                                                        <div class="w-12"></div>
+                                                                    </div>
+                                                                </div>
+
+                                                        <!--                                                       menu of the menu-->
+                                                            <div class="flex-grow flex-shrink overflow-y-auto">
+                                                                @foreach($c['children'] as $sub)
+                                                                    <div class="block">
+                                                                        <div class="border-t border-gray-200 flex items-center justify-between">
+                                                                            <a
+                                                                                    href="/categoria-prodotto/{{ str_replace(' ', '-', Str::lower($c['name'])) }}/{{ str_replace(' ', '-', Str::lower($sub['name'])) }}"
+                                                                                    class="bg-white flex-1 py-5 px-6 font-normal  ">
+                                                                                <span>
+                                                                                    {{ $sub['name'] }}
+                                                                                </span>
+                                                                            </a>
+                                                                            <div class=" bg-red-100 h-[100%] " x-data="{showMenu : false}">
+                                                                                <button @click.prevent="showMenu = !showMenu " class="py-5 px-6 bg-white focus:outline-none" aria-label="Open Submenu">
+                                                                                    <span class="sr-only">Apri  Mamma</span>
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24" stroke="currentColor" class="w-6 h-6 text-[#E72B6F]">
+                                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                                                                    </svg>
+                                                                                </button>
                                                                             <!--                                        3 menu-->
-                                                                            <div x-show="showMenu" class="fixed w-full top-0 left-0 bottom-px z-50 pointer-events-auto opacity-100" >
-                                                                                <div class="absolute inset-0 bg-black bg-opacity-50 transition delay-75 duration-200 " ></div>
-                                                                                <div   class="absolute bottom-0 top-0 left-0 bg-white max-w-2xl w-full transform transition duration-300 ease-in ">
-                                                                                    <div class="absolute inset-0  ">
-                                                                                        <div  class="flex flex-col justify-between h-full">
+                                                                                <div x-show="showMenu" class="fixed w-full top-0 left-0 bottom-px z-50 pointer-events-auto opacity-100" >
+                                                                                    <div class="absolute inset-0 bg-black bg-opacity-50 transition delay-75 duration-200 " ></div>
+                                                                                    <div   class="absolute bottom-0 top-0 left-0 bg-white max-w-2xl w-full transform transition duration-300 ease-in ">
+                                                                                        <div class="absolute inset-0  ">
+                                                                                            <div  class="flex flex-col justify-between h-full">
                                                                                             <!--                                                        top of the menu-->
-                                                                                            <div class="block ">
-                                                                                                <div class="flex items-center justify-between">
-                                                                                                    <button @click.prevent="showMenu = !showMenu" class="py-5 px-5 focus:outline-none" aria-label="Chiudi " >
-                                                                                                        <span class="sr-only">Chiudi Mamma</span>
-                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24" stroke="currentColor" class="w-6 h-6 text-[#E72B6F] stroke-2">
-                                                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                                                                                                        </svg>
-                                                                                                    </button>
-                                                                                                    <a  class="font-bold text-lg text-[#E72B6F] uppercase m-auto py-5 px-6" title="Mamma" aria-label="Mamma">
-                                                                                                        <span class="m-auto">Abbigliamento</span>
-                                                                                                    </a>
-                                                                                                    <div class="w-12"></div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <!--                                                        menu of the menu-->
-                                                                                            <div class="flex-grow flex-shrink overflow-y-auto">
-                                                                                                <div class="block">
-                                                                                                    <div class="border-t border-gray-200 flex items-center justify-between">
-                                                                                                        <a aria-label="Abbigliamento" data-submenu-open-id="menu-645174" class="bg-white flex-1 py-5 px-6 font-normal  ">
-                                                                                                            <span>Abbigliamento</span>
+                                                                                                <div class="block ">
+                                                                                                    <div class="flex items-center justify-between">
+                                                                                                        <button @click.prevent="showMenu = !showMenu" class="py-5 px-5 focus:outline-none" aria-label="Chiudi " >
+                                                                                                            <span class="sr-only">
+                                                                                                                Chiudi {{ $sub['name'] }}
+                                                                                                            </span>
+                                                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24" stroke="currentColor" class="w-6 h-6 text-[#E72B6F] stroke-2">
+                                                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                                                                                            </svg>
+                                                                                                        </button>
+                                                                                                        <a
+                                                                                                                href="/categoria-prodotto/{{ str_replace(' ', '-', Str::lower($c['name'])) }}/{{ str_replace(' ', '-', Str::lower($sub['name'])) }}"
+                                                                                                                class="font-bold text-lg text-[#E72B6F] uppercase m-auto py-5 px-6">
+                                                                                                            <span class="m-auto">
+                                                                                                                {{ $sub['name'] }}
+                                                                                                            </span>
                                                                                                         </a>
-                                                                                                        <div class=" bg-red-100 h-[100%] " x-data="{showMenu : false}">
-                                                                                                            <button @click.prevent="showMenu = !showMenu " class="py-5 px-6 bg-white focus:outline-none" data-submenu-open-id="menu-645174" aria-label="Open Submenu">
-                                                                                                                <span class="sr-only">Apri  Abbigliamento</span>
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        <div class="w-12"></div>
                                                                                                     </div>
+                                                                                                </div>
+                                                                                            <!--                                                        menu of the menu-->
+                                                                                                <div class="flex-grow flex-shrink overflow-y-auto">
+
+                                                                                                    @foreach($sub['children'] as $s)
+                                                                                                        <div class="block">
+                                                                                                            <div class="border-t border-gray-200 flex items-center justify-between">
+                                                                                                                <a
+                                                                                                                        href="/categoria-prodotto/{{ str_replace(' ', '-', Str::lower($c['name'])) }}/{{ str_replace(' ', '-', Str::lower($sub['name'])) }}/{{ str_replace(['(',')','/', '+',','],'',str_replace([' '], '-', Str::lower($s['name'])))  }}"
+                                                                                                                        class="bg-white flex-1 py-5 px-6 font-normal  ">
+                                                                                                                    <span>
+                                                                                                                        {{ $s['name'] }}
+                                                                                                                    </span>
+                                                                                                                </a>
+                                                                                                                <div class=" bg-red-100 h-[100%] " x-data="{showMenu : false}">
+                                                                                                                    <button
+                                                                                                                            @click.prevent="showMenu = !showMenu "
+                                                                                                                            class="py-5 px-6 bg-white focus:outline-none">
+                                                                                                                        <span class="sr-only">Apri  {{ $s['name'] }}</span>
+                                                                                                                    </button>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    @endforeach
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -141,15 +208,17 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                @endforeach
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
                                     </div>
-                                </div>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 <div class="hidden lg:block ">
-    <div class="mx-auto w-[90%] md:w-[85%] lg:w-[88%] mx-5 mx-auto ">
+    <div class="mx-auto w-[90%] md:w-[85%] lg:w-[88%] mx-5">
         <div class="-mx-3 pb-1 ">
             <div x-data="{ show: false }">
                 <div class=" flex items-center justify-between space-x-2">
@@ -9,13 +9,13 @@
                                $c['name'] == 'Mamma'
                              or $c['name'] == 'Moda bambina'
                              or $c['name'] == 'Casa'
-                             or $c['name'] == 'Passegginiasd'
+                             or $c['name'] == 'Passeggini'
                              or $c['name'] == 'Auto e viaggio'
                              or $c['name'] == 'Gioco'
                              or $c['name'] == 'Baby food'
                              or $c['name'] == 'Pappa'
                              or $c['name'] == 'allattamento'
-                             or $c['name'] == 'Igiene'
+                             or $c['name'] == 'Igienea'
                              )
 
                             <nav class="lg:space-x-1 " >

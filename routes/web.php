@@ -17,10 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 use App\Http\Controllers\CategoryController;
 Route::get('/', [CategoryController::class, 'landingPage']);
-Route::get('/categoria-prodotto/{slug}/', [ItemController::class, 'selectedCategoryItems']);
-Route::get('/categoria-prodotto/{slug}/{slug1}/', [ItemController::class, 'selectedCategoryItems']);
-Route::get('/categoria-prodotto/{slug}/{slug1}/{slug2}/', [ItemController::class, 'selectedCategoryItems']);
-
+Route::get('/categoria-prodotto/{slug}/', [ItemController::class, 'selectedItems']);
+Route::get('/categoria-prodotto/{slug}/{slug1}/', [ItemController::class, 'selectedItems']);
+Route::get('/categoria-prodotto/{slug}/{slug1}/{slug2}/', [ItemController::class, 'selectedItems']);
 Route::get('/prodotto/{slug}/', [ItemController::class, 'selectedItem']);
 
 

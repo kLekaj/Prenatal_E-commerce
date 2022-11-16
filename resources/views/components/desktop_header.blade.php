@@ -42,7 +42,6 @@
                            type="text"
                            name="search[]"
                            placeholder="Che prodotto stai cercando?" >
-
                     <button
                         type="submit"
                         class="flex-shrink-0 border-transparent py-1 px-2 rounded focus:bg-transparent focus:outline-none"
@@ -85,20 +84,18 @@
                             <div class="bg-white shadow-lg" style="min-width: 200px;">
                                 <div class="border-b border-gray-200">
                                     <div class="py-6 bg-white">
-                                        <div class="container text-center">
-                                            <a href="/login">
-                                                <p class="w-full flex uppercase justify-center items-center text-center rounded-full px-5 border transition delay-150 duration-150 ease-in-out focus:outline-none text-base py-2 px-5 bg-[#E72B6F] text-white border-[#E72B6F] hover:bg-white hover:text-[#E72B6F] focus:bg-white focus:text-[#E72B6F] focus:shadow-outline-[#E72B6F] cursor-pointer" data-disabled-classes="bg-gray-300 text-white border-gray-300 pointer-events-none cursor-not-allowed" data-enabled-classes="bg-[#E72B6F] text-white border-[#E72B6F] hover:bg-white hover:text-[#E72B6F] focus:bg-white focus:text-[#E72B6F] focus:shadow-outline-[#E72B6F] cursor-pointer" data-modal-trigger="login-modal" aria-label="ACCEDI">
-                                                    <span class="button-text">
-                                                        Welcome, {{ auth()->user()->name }}!
-                                                    </span>
-                                                </p>
-                                            </a>
-
-                                            <div class="flex items-center justify-center mt-4">
+                                        <div class="container text-center gap-2">
+                                            <p class="text-[#E72B6F]  text-sm font-medium pb-2">
+                                                Welcome, {{ auth()->user()->name }}!
+                                            </p>
+                                            <div class="w-full flex uppercase justify-center items-center text-center rounded-full px-5 border transition delay-150 duration-150 ease-in-out focus:outline-none text-base py-2 px-5 bg-[#E72B6F] text-white border-[#E72B6F] hover:bg-white hover:text-[#E72B6F] focus:bg-white focus:text-[#E72B6F] focus:shadow-outline-[#E72B6F] cursor-pointer">
                                                 <form action="/logout" method="post">
                                                     @csrf
-                                                    <button type="submit">Logout</button>
-                                                    <span class="text-[#E72B6F] text-sm font-medium border-b border-double border-1 border-[#E72B6F]">Logout</span>
+                                                    <button type="submit">
+                                                        <span class="button-text">
+                                                            Logout
+                                                        </span>
+                                                    </button>
                                                 </form>
                                             </div>
                                         </div>

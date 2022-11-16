@@ -5,14 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{--        @vite('resources/css/app.css')--}}
     {{--                swipper js--}}
-    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-    {{--        alpine js--}}
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    {{--        <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
-    {{--        <script src="{{ asset('js/app.js') }}" defer></script>--}}
-    {{--        <script src="{{ mix('js/app.js') }}" defer></script>--}}
 
 </head>
 
@@ -59,7 +52,6 @@
         </div>
         <div class="w-full md:w-2/3 flex flex-col justify-start items-center pt-0 md:py-8 bg-gray-100">
             <form method="post" action="/registers" class="block w-full" >
-                @csrf
                 <div class="mx-auto w-full max-w-md bg-white overflow-hidden rounded-lg relative flex flex-col justify-start" style="min-height: calc(100vh - 4rem);">
                     <div d class="w-full h-full pt-6 pb-8 grow flex-col justify-start">
                         <p class="w-full mt-6 text-lg px-8">1. Informazioni personali</p>
@@ -82,25 +74,25 @@
                                     </button>
                                 </div>
                             </div>
+                            @csrf
 
-
-                            <!-- Email Address -->
+                        <!-- Email Address -->
                             <div class="relative z-0 w-full mb-5 ">
                                 <input
-                                    type="email"
-                                    name="email"
-                                    placeholder=" "
-                                    required
-                                    class="block w-full px-4 pt-3 pb-2 rounded-md bg-transparent border border-gray-300 focus:border-gray-500 ring-transparent ring-1 focus:ring-gray-500 outline-none read-only:opacity-100 "
+                                        type="email"
+                                        name="email"
+                                        placeholder=" "
+                                        class="block w-full px-4 pt-3 pb-2 rounded-md bg-transparent border border-gray-300 focus:border-gray-500 ring-transparent ring-1 focus:ring-gray-500 outline-none read-only:opacity-100 "
+                                        required=""
                                 />
-                                <label for="name" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Email*</label>
-                                <span class="text-sm text-red-600 hidden" id="error">Email is required</span>
-                            </div>
-                            @error('email')
-                            <p>{{ $message }}</p>
-                        @enderror
-                        <!-- Password -->
+                                <label
+                                        for="name"
+                                        class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">
+                                    Email*
+                                </label>
 
+                            </div>
+{{--                        <!-- Password -->--}}
                             <div class="flex flex-wrap">
                                 <div class="flex w-full">
                                     <div class="relative z-0 w-full flex-1">
@@ -108,8 +100,8 @@
                                             type="password"
                                             name="password"
                                             placeholder=" "
-                                            required
                                             class="block w-full px-4 pt-3 pb-2 rounded-md bg-transparent border border-gray-300 focus:border-gray-500 ring-transparent ring-1 focus:ring-gray-500 outline-none read-only:opacity-100 "
+                                            required=""
                                         />
                                         <label for="name" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Password*</label>
                                         <span class="text-sm text-red-600 hidden" id="error">Password is required</span>
@@ -133,16 +125,15 @@
                                     </p>
                                 </div>
                             </div>
-
-                            <!-- First Name -->
+{{--                            <!-- First Name -->--}}
                             <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
                                 <div class="relative z-0  mb-5 ">
                                     <input
                                         type="text"
                                         name="name"
                                         placeholder=" "
-                                        required
                                         class="block w-full px-4 pt-3 pb-2 rounded-md bg-transparent border border-gray-300 focus:border-gray-500 ring-transparent ring-1 focus:ring-gray-500 outline-none read-only:opacity-100 "
+                                        required=""
                                     />
                                     <label for="name" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Nome*</label>
                                     <span class="text-sm text-red-600 hidden" id="error">Nome is required</span>
@@ -150,16 +141,17 @@
                                 @error('name')
                                 <p>{{ $message }}</p>
                             @enderror
-                            <!-- Last Name -->
+
+{{--                            <!-- Last Name -->--}}
 
                                 <div class="relative z-0  mb-5 ">
                                     <input
                                         type="text"
-                                        name="name"
+                                        name="las_name"
                                         placeholder=" "
                                         class="block w-full px-4 pt-3 pb-2 rounded-md bg-transparent border border-gray-300 focus:border-gray-500 ring-transparent ring-1 focus:ring-gray-500 outline-none read-only:opacity-100 "
                                     />
-                                    <label for="name" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Cognome*</label>
+                                    <label for="last_name" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Cognome*</label>
                                     <span class="text-sm text-red-600 hidden" id="error">Cognome* is required</span>
                                 </div>
 
@@ -171,12 +163,11 @@
                                 <div class="relative z-0 w-full mb-5 ">
                                     <input
                                         type="date"
-                                        name="name"
+                                        name="date"
                                         placeholder="Data di nascita*"
-
                                         class="block w-full px-4 pt-3 pb-2 rounded-md bg-transparent border border-gray-300 focus:border-gray-500 ring-transparent ring-1 focus:ring-gray-500 outline-none read-only:opacity-100 "
                                     />
-                                    <label for="name" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Data di nascita*</label>
+                                    <label for="date" class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400">Data di nascita*</label>
                                     <span class="text-sm text-red-600 hidden" id="error">Data di nascita is required</span>
                                 </div>
 
@@ -195,14 +186,25 @@
                                             </g>
                                         </svg>
                                     </div>
-                                    <input class="block w-full px-4 pt-3 pb-2 rounded-md bg-transparent border border-gray-300 focus:border-gray-500 ring-transparent ring-1 focus:ring-gray-500 outline-none read-only:opacity-100" type="date" min="1922-10-31" max="2004-10-30" id="birthday_mobile" name="birthday_mobile" data-forced-fl="Y" placeholder="">
-                                    <label class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400" for="birthday_mobile">
+                                    <input
+                                            class="block w-full px-4 pt-3 pb-2 rounded-md bg-transparent border border-gray-300 focus:border-gray-500 ring-transparent ring-1 focus:ring-gray-500 outline-none read-only:opacity-100"
+                                            type="date"
+                                            min="1922-10-31"
+                                            max="2004-10-30"
+                                            id="birthday_mobile"
+                                            name="birthday_mobile"
+                                            data-forced-fl="Y"
+                                            placeholder=""
+                                    >
+                                    <label
+                                            class="absolute duration-200 top-3 left-4 -z-1 origin-left text-sm text-gray-400"
+                                            for="birthday_mobile">
                                         Data di nascita*
                                     </label>
                                 </div>
-                                <div error-birthday_mobile-required="" class="hidden text-xs text-right text-red-800">Obbligatorio.</div>
-                                <div error-birthday_mobile-before="" class="hidden text-xs text-right text-red-800">Deve essere una data precedente o uguale al 30/10/2004.</div>
-                                <div error-birthday_mobile-after="" class="hidden text-xs text-right text-red-800">Deve essere una data successiva o uguale al 31/10/1922.</div>
+                                <div  class="hidden text-xs text-right text-red-800">Obbligatorio.</div>
+                                <div  class="hidden text-xs text-right text-red-800">Deve essere una data precedente o uguale al 30/10/2004.</div>
+                                <div  class="hidden text-xs text-right text-red-800">Deve essere una data successiva o uguale al 31/10/1922.</div>
 
                             </div>
 
@@ -212,12 +214,20 @@
 
                                     <div class="ml-auto flex space-x-8">
                                         <label class="inline-flex items-center py-2">
-                                            <input type="radio" class="rounded-full h-4 w-4 border-2 border-gray-600 bg-white checked:border-gray-900 focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain cursor-pointer" name="sex" value="F">
+                                            <input
+                                                    type="radio"
+                                                    class="rounded-full h-4 w-4 border-2 border-gray-600 bg-white checked:border-gray-900 focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain cursor-pointer"
+                                                    name="sex"
+                                                    value="F">
 
                                             <span class="ml-2 text-gray-700">Femmina</span>
                                         </label>
                                         <label class="inline-flex items-center py-2">
-                                            <input type="radio"  class="rounded-full h-4 w-4 border-2 border-gray-600 bg-white checked:border-gray-900 focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain cursor-pointer" name="sex" value="M">
+                                            <input
+                                                    type="radio"
+                                                    class="rounded-full h-4 w-4 border-2 border-gray-600 bg-white checked:border-gray-900 focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain cursor-pointer"
+                                                    name="sex"
+                                                    value="M">
                                             <span class="ml-2 text-gray-700">Maschio</span>
                                         </label>
                                     </div>
@@ -227,7 +237,11 @@
                             <div class="">
                                 <div class="mt-1 flex items-start justify-space-between space-x-16">
                                     <label class="inline-flex items-center cursor-pointer">
-                                        <input type="checkbox"  class="text-gray-700 w-5 h-5 outline-0 bg-white focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain cursor-pointer flex-shrink-0" name="privacy" value="1" >
+                                        <input
+                                                type="checkbox"
+                                                class="text-gray-700 w-5 h-5 outline-0 bg-white focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain cursor-pointer flex-shrink-0"
+                                                name="privacy"
+                                                value="1" >
                                         <span class="ml-8 text-gray-700">
                                                 Dichiaro di aver letto ed accettato
                                                 <a class="text-[#E72B6F] underline hover:no-underline" target="_blank" href="https://storage.googleapis.com/prenatal-italy/2021/09/a570a73c-informativa-privacy-card.pdf">l’informativa sui dati personali</a> e di aver preso visione ed accettato il <a class="text-[#E72B6F] underline hover:no-underline" target="_blank" href="https://storage.googleapis.com/prenatal-italy/2020/10/be20245c-regolamento-pr%C3%89natal-card.pdf">Regolamento della Prenatal Card</a> o il <a class="text-[#E72B6F] underline hover:no-underline" target="_blank" href="https://storage.googleapis.com/prenatal-italy/2020/10/655228fe-regolamento-pr%C3%89natal-vip-card.pdf">
@@ -243,12 +257,18 @@
                             <div class="space-y-4 py-4">
                                 <input type="hidden" name="primary_button" value="FULL">
                                 <div>
-                                    <button type="submit" class="flex w-full items-center justify-center px-4 py-3 bg-[#E72B6F] border border-[#E72B6F] rounded-lg font-semibold text-sm text-white uppercase tracking-wide hover:bg-white hover:text-[#E72B6F] active:bg-white cursor-pointer focus:bg-opacity-75 disabled:bg-[#E72B6F] disabled:text-white transition ease-in-out duration-150 outline-none" >
+                                    <button
+                                            type="submit"
+                                            class="flex w-full items-center justify-center px-4 py-3 bg-[#E72B6F] border border-[#E72B6F] rounded-lg font-semibold text-sm text-white uppercase tracking-wide hover:bg-white hover:text-[#E72B6F] active:bg-white cursor-pointer focus:bg-opacity-75 disabled:bg-[#E72B6F] disabled:text-white transition ease-in-out duration-150 outline-none" >
                                         Registrati senza dirci di più
                                     </button>
                                 </div>
                                 <div>
-                                    <button type="button" class="flex w-full items-center justify-center px-4 py-3 border rounded-lg font-semibold text-sm text-gray-700 uppercase tracking-wide cursor-pointer focus:bg-gray-100 disabled:cursor-default disabled:opacity-25 transition ease-in-out duration-150 outline-none" personalize-experience="personalize-experience" data-target-step="RESIDENTIAL" disabled="">
+                                    <button
+                                            type="button"
+                                            class="flex w-full items-center justify-center px-4 py-3 border rounded-lg font-semibold text-sm text-gray-700 uppercase tracking-wide cursor-pointer focus:bg-gray-100 disabled:cursor-default disabled:opacity-25 transition ease-in-out duration-150 outline-none"
+                                            disabled=""
+                                    >
                                         Personalizza la tua esperienza
                                     </button>
                                 </div>
@@ -285,35 +305,27 @@
 
 {{--<form method="post" action="/registers">--}}
 {{--    @csrf--}}
-{{--    <div class="form-group" >--}}
-{{--        <label for="name">Name</label>--}}
-{{--        <input type="text" id="title" name="name" class="form-control" required="">--}}
-{{--    </div>--}}
+{{--        <input type="text" id="title" name="name" class="form-control" placeholder="name" required="">--}}
+{{--    <br>--}}
 {{--    @error('name')--}}
 {{--        <p>{{ $message }}</p>--}}
 {{--    @enderror--}}
-{{--    <div class="form-group" >--}}
-{{--        <label for="name">Username</label>--}}
-{{--        <input type="text" id="title" name="username" class="form-control" required="">--}}
-{{--    </div>--}}
+{{--        <input type="text" id="title" name="username" class="form-control" placeholder="username" required="">--}}
+{{--    <br>--}}
 {{--    @error('username')--}}
 {{--    <p>{{ $message }}</p>--}}
 {{--    @enderror--}}
-{{--    <div class="form-group">--}}
-{{--        <label for="name">Email</label>--}}
-{{--        <input type="email" id="title" name="email" class="form-control" required="">--}}
-{{--    </div>--}}
+{{--        <input type="email" id="title" name="email" class="form-control" placeholder="email" required="">--}}
+{{--    <br>--}}
 {{--    @error('email')--}}
 {{--    <p>{{ $message }}</p>--}}
 {{--    @enderror--}}
-{{--    <div class="form-group">--}}
-{{--        <label for="name">Password</label>--}}
-{{--        <input type="password" id="title" name="password" class="form-control" required="">--}}
-{{--    </div>--}}
+{{--        <input type="password" id="title" name="password" class="form-control" placeholder="pass" required="">--}}
+{{--    <br>--}}
 {{--    @error('password')--}}
 {{--    <p>{{ $message }}</p>--}}
 {{--    @enderror--}}
 
-{{--    <button type="submit" class="btn btn-primary">Submit</button>--}}
+{{--    <button type="submit" >Submit</button>--}}
 {{--</form>--}}
 

@@ -5,186 +5,140 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\ItemSize;
-use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
 
-    public function selectedCategoryItems()
+    public function selectedItems(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-
-        $categories = Category::tree();
-        $checked_values = $this->get_filter_checked_values();
-        $marche_filter_array_to_db = $this->filter_array_to_db($checked_values, 'marche');
-        $sesso_filter_array_to_db = $this->filter_array_to_db($checked_values, 'sesso');
-        $min_price_filter_array_to_db = $this->filter_array_to_db($checked_values, 'filter_min_prezzo');
-        $max_price_filter_array_to_db = $this->filter_array_to_db($checked_values, 'filter_max_prezzo');
-        $color_filter_array_to_db = $this->filter_array_to_db($checked_values, 'filter_color');
-        $search_entered_values = $this->get_search_entered_values();
-        $search = $this->filter_array_to_db($search_entered_values,'search');
-
-
-        $category_items = Category::with('items')
-            ->where(
-                'link',
-                'like',
-                str_replace(
-                    'http://127.0.0.1:8000/categoria-prodotto/',
-                    '/',
-                    url()->current()) . '%')
-            ->get()
-            ->toArray();
-
-        if (
-            empty($marche_filter_array_to_db) or
-            empty($sesso_filter_array_to_db) or
-            empty($min_price_filter_array_to_db) or
-            empty($max_price_filter_array_to_db) or
-            empty($color_filter_array_to_db)
-        ) {
-            if (!empty($search[0][0])) {
-                $items = Item::with(['gallery', 'sizes'])
-                    ->whereIn('id', $this->items_id($category_items))
-                    ->where('title', 'LIKE',$search[0][0] . '%')
-//                    ->get()
-                    ->paginate(12)
-                    ->toArray();
-            }
-            else{
-                $items = Item::with(['gallery', 'sizes'])
-                    ->whereIn('id', $this->items_id($category_items))
-//                    ->get()
-                    ->paginate(12)
-                    ->toArray()
-                ;
-            }
-        }
-        else
-        {
-            if (!empty($search[0][0])) {
-                $items = Item::with(['gallery', 'sizes'])
-                    ->whereIn('id', $this->items_id($category_items))
-                    ->where('marche', $marche_filter_array_to_db)
-                    ->where('genere', $sesso_filter_array_to_db)
-                    ->where('colore', $color_filter_array_to_db)
-                    ->where('title', 'LIKE',$search[0][0] . '%')
-                    ->whereBetween('price', [$min_price_filter_array_to_db, $max_price_filter_array_to_db])
-//                    ->get()
-                    ->paginate(12)
-                    ->toArray();
-            }
-            else{
-                $items = Item::with(['gallery', 'sizes'])
-                    ->whereIn('id', $this->items_id($category_items))
-                    ->where('marche', $marche_filter_array_to_db)
-                    ->where('genere', $sesso_filter_array_to_db)
-                    ->where('colore', $color_filter_array_to_db)
-                    ->whereBetween('price', [$min_price_filter_array_to_db, $max_price_filter_array_to_db])
-//                    ->get()
-                    ->paginate(12)
-                    ->toArray();
-            }
-        }
-
-//        dd( url()->current() . '?page=' . $items['last_page']-1, $items );
-
-        $filters_properties = Item::with(['gallery', 'sizes'])
-            ->whereIn('id', $this->items_id($category_items))
-            ->get()->toArray();
-
-
-        $size_filter = $this->size_filter_format($filters_properties);
-        $marche_filter = $this->filter_format($filters_properties, 'marche');
-        $genere_filter = $this->filter_format($filters_properties, 'genere');
-
-        $product_path_url = $this->product_path_url();
-
-//        dd($items['links']);
         return view('pages/items_page', [
-            'categories' => $categories,
-            'posts' => $items,
-
-            'filtered_values' => $checked_values,
-            'checked_value' => ['$checked', 'sdad'],
-            'marca' => $marche_filter,
-            'gendre' => $genere_filter,
-            'size_filter' => $size_filter,
-
-            'categories_urls' => $product_path_url,
-
-
-            'filters_properties' => $filters_properties,
+            'categories' => Category::tree(),
+            'categories_urls' => $this->product_path_url(),
             'path_url' => explode('/', str_replace('http://127.0.0.1:8000/categoria-prodotto/', '/', url()->current())),
+            'items' => $this->items($this->get_filter_checked_values()),
+            'filtered_values' => $this->get_filter_checked_values(),
+            'marca' => $this->filter_format('marche'),
+            'gendre' => $this->filter_format( 'genere'),
+            'size_filter' => $this->size_filter_format(),
+            'min_price' => $this->filter_value($this->get_filter_checked_values(), 'filter_min_prezzo'),
+            'max_price' => $this->filter_value($this->get_filter_checked_values(), 'filter_max_prezzo'),
         ]);
     }
 
-    public function selectedItem()
+    // return products ready for front-end
+    public function items($checked_values): array
     {
-        $categories = Category::tree();
-        $page_slug = url()->current();
-        $link = str_replace('http://127.0.0.1:8000/', 'https://www.prenatal.com/', $page_slug);
+        $marche_filter = $this->filter_value($checked_values, 'marche');
+        $sesso_filter = $this->filter_value($checked_values, 'sesso');
+        $min_price_filter = $this->filter_value($checked_values, 'filter_min_prezzo');
+        $max_price_filter = $this->filter_value($checked_values, 'filter_max_prezzo');
+        $color_filter = $this->filter_value($checked_values, 'filter_color');
+        $search_entered_values = $this->get_search_entered_value();
+        $search = $this->filter_value($search_entered_values,'search');
 
-        $itemSizes = [];
-        $item = (new Item())->getCurrentItem($link);
-        if ($item !== null && $item['hasSizes']) {
-            $itemSizes = (new ItemSize())->getSizes($item['id']);
+//        if we have done the search it will return the data with the search of tittle based on the search
+        if (!empty($search[0][0])){
+            $items = Item::with(['gallery', 'sizes'])
+                ->whereIn('id', $this->items_id($this->category_items()))
+                ->where('title', 'LIKE',$search[0][0] . '%')
+                ->orderBy('price', 'desc')
+                ->paginate(12)
+                ->toArray();
         }
-        return view('pages/item', [
-            'categories' => $categories,
-            'item' => $item,
-            'itemSizes' => $itemSizes,
+        else{
+//            if we have not done search and filters it will return the all the chosen category data
+            if (empty($checked_values)){
+                $items = Item::with(['gallery', 'sizes'])
+                    ->whereIn('id', $this->items_id($this->category_items()))
+                    ->orderBy('price', 'desc')
+                    ->paginate(12)
+                    ->toArray();
+            }
+//            if we have done the filters it will return the data with the specific filtration chosen
+            else{
+                $items = Item::with(['gallery', 'sizes'])
+                    ->whereIn('id', $this->items_id($this->category_items()))
+                    ->where('marche', $marche_filter)
+                    ->where('genere', $sesso_filter)
+                    ->where('colore', $color_filter)
+                    ->orderBy('price', 'desc')
+                    ->whereBetween('price', [$min_price_filter, $max_price_filter])
 
-        ]);
+                    ->paginate(12)
+                    ->toArray();
+            }
+        }
+        return $items;
     }
 
-
-    // get all the filter values of the given arrey we enter e.x => we are in a category pappa and we wonna know all the filter values like
+    // get all the filter values of the given array we enter e.x => we are in a category pappa and we want to know all the filter values like
     //  for this category [ 'marche' => ['adidas' , 'nike' etc] ]
 
-    public function filter_format($array, $filter)
+    public function filter_format($filter): array
     {
+        $items = $this->getCurrentItems();
+
         $gendre_filter_values = [];
-        foreach ($array as $f) {
+        foreach ($items as $vale) {
             foreach ($gendre_filter_values as $i) {
-                if ($f[$filter] == $i) {
+                if ($vale[$filter] == $i) {
                     continue 2;
                 }
             }
-            $gendre_filter_values[] = $f[$filter];
+            $gendre_filter_values[] = $vale[$filter];
         }
         return $gendre_filter_values;
+
     }
-
-// get all the filter values of the given arrey we enter e.x => we are in a category bambini and we wonna know all the filter values like
-    //  for this category [ 'size' => ['12cm' , '13cm' ] ] etc
-    public function size_filter_format($array)
+    //   get all the filter values of the given arrey we enter e.x => we are in a category bambini and we want to know all the filter values like
+    //   for this category [ 'size' => ['12cm' , '13cm' ] ] etc
+    public function size_filter_format(): array
     {
+        $items = $this->getCurrentItems();
         $sizes_filter_values = [];
-        foreach ($array as $f) {
+        foreach ($items as $value) {
 
-            if (is_array($f['sizes'])) {
-                foreach ($f['sizes'] as $i) {
+            if (is_array($value['sizes'])) {
+                foreach ($value['sizes'] as $i) {
                     $sizes_filter_values[] = $i;
                 }
             } else {
-                $sizes_filter_values[] = $f['sizes'];
+                $sizes_filter_values[] = $value['sizes'];
             }
         }
 
         $size_filters = [];
-        foreach ($sizes_filter_values as $f) {
+        foreach ($sizes_filter_values as $value) {
             foreach ($size_filters as $i) {
-                if ($f['taglia'] == $i or $f['taglia'] == null) {
+                if ($value['taglia'] == $i or $value['taglia'] == null) {
                     continue 2;
                 }
             }
-            $size_filters[] = $f['taglia'];
+            $size_filters[] = $value['taglia'];
         }
         return $size_filters;
     }
 
-//    get the path and return the numbers of the categoires url
-    public function product_path_url()
+    public function category_items()
+    {
+        return Category::with('items')
+            ->where('link', 'like', str_replace('http://127.0.0.1:8000/categoria-prodotto/', '/', url()->current()) . '%')
+            ->get()
+            ->toArray();
+    }
+
+    public function getCurrentItems(): array
+    {
+
+
+        return Item::with(['gallery', 'sizes'])
+            ->whereIn('id', $this->items_id($this->category_items()))
+            ->get()
+            ->toArray();
+    }
+
+    //   get the path and return the numbers of the categories url
+    public function product_path_url(): int
     {
         $page_url = url()->current();
         $query_url = str_replace('http://127.0.0.1:8000/categoria-prodotto/', '/', $page_url);
@@ -197,8 +151,8 @@ class ItemController extends Controller
         return $categories_urls;
     }
 
-    //get all the items id of the items in the choosen category
-    public function items_id($category_items)
+    //   get all the items id of the items in the choosen category
+    public function items_id($category_items): array
     {
         $items_id = [];
         foreach ($category_items as $q) {
@@ -217,8 +171,8 @@ class ItemController extends Controller
         return $items_id;
     }
 
-    //  get the values of the choosen filter  e.x colore->['grey', 'black'], size->['12cm', '18cm'] etc
-    public function get_filter_checked_values()
+    //   get the values of the choosen filter  e.x colore->['grey', 'black'], size->['12cm', '18cm'] etc
+    public function get_filter_checked_values(): array
     {
         $checked_values = [];
         if (!empty($_GET['filter_marche'])) {
@@ -248,7 +202,8 @@ class ItemController extends Controller
         return $checked_values;
     }
 
-    public function get_search_entered_values()
+    //   get the values of the search  input
+    public function get_search_entered_value(): array
     {
         $checked_values = [];
         if (!empty($_GET['search'])) {
@@ -259,8 +214,8 @@ class ItemController extends Controller
         return $checked_values;
     }
 
-    //        separete array vlaues from checked array we get to do the filtring in query
-    public function filter_array_to_db($checked_values, $filter_name)
+    //   separete array vlaues from checked array we get to do the filtring in query
+    public function filter_value($checked_values, $filter_name): array
     {
         $filter_values = [];
         foreach ($checked_values as $c){
@@ -271,18 +226,25 @@ class ItemController extends Controller
             }
         }
         return $filter_values;
-
     }
 
-    public function search()
+    //    return selected item
+    public function selectedItem()
     {
 
-        $item = Item::where('title', 'LIKE', "%{['title']}%")
-            ->take(25)
-            ->get();
+        $link = str_replace('http://127.0.0.1:8000/', 'https://www.prenatal.com/', url()->current());
+        $itemSizes = [];
+        $item = (new Item())->getCurrentItem($link);
+        if ($item !== null && $item['hasSizes']) {
+            $itemSizes = (new ItemSize())->getSizes($item['id']);
+        }
+        return view('pages/item', [
+            'categories' => Category::tree(),
+            'item' => $item,
+            'itemSizes' => $itemSizes,
 
-        return [
-            'items' => $item,
-        ];
+        ]);
     }
+
+
 }

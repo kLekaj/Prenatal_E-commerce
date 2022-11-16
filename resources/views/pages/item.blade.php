@@ -4,9 +4,9 @@
     @endsection
 
     @section('slot')
-            <div class="flex-grow mx-5 mx-auto lg:pt-20  w-full ">
+            <div class="mx-auto w-[90%] lg:w-[88%] mx-5 lg:pt-20  w-full ">
 
-                <div class="container mx-5 mx-auto pt-20">
+                <div class="container mx-5 mx-auto lg:pt-20">
                     @include('components.product_info_url')
                 </div>
                 <div class="container mx-5 mx-auto">
@@ -59,6 +59,8 @@
                                             </svg>
                                         </button>
                                     </div>
+                                    <div class="lg:hidden swiper-paginationItem absolute -mt-10 flex justify-center"></div>
+
                                 </div>
 
 
@@ -66,7 +68,7 @@
                                     <div class="swiper-wrapper w-full lg:w-full flex lg:flex-wrap pb-8">
                                         @if(count($item['gallery']) < 4)
                                             @foreach($item['gallery'] as $k=>$i)
-                                                <div  class="lg:w-1/2 lg:p-3 w-full px-2 swiper-slide">
+                                                <div  class="lg:w-1/2 lg:p-3 w-full px-2 ">
                                                     <div class="border border-gray-300 h-full ">
                                                         <div class=" w-full aspect-3/4">
                                                             <img
@@ -77,8 +79,8 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                            <div  class="lg:w-1/2 lg:p-3 w-full px-2 swiper-slide">
-                                                <div class="border border-gray-300">
+                                            <div  class="lg:w-1/2 lg:p-3 w-full px-2 ">
+                                                <div class="border border-gray-300 bg-red-100">
                                                     <div class=" w-full aspect-3/4">
                                                         <img class="object-cover w-full"
                                                              alt="Armadio dolce stella - Foppapedretti"
@@ -262,7 +264,6 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="md:block swiper-paginationItem absolute top-[105%] flex justify-center"></div>
                             </div>
                             <div class="font-normal text-base mt-6 mb-6">
                                 <div class="flex justify-start flex-col mt-6">

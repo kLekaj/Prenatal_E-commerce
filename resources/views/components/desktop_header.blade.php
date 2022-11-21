@@ -1,7 +1,9 @@
 <div class=" lg:w-[88%] w-[85%] mx-5 mx-auto">
     <div class="pb-2 flex justify-between items-center md:space-x-16">
         <div class="flex items-center md:space-x-8">
-            <a class="inline-block px-4 bg-[#E72B6F] rounded-b-lg py-5"  >
+            <a
+                    href="/"
+                    class="inline-block px-4 bg-[#E72B6F] rounded-b-lg py-5"  >
                 <span class="sr-only">Prenatal</span>
                 <svg width="397" height="77"  class="h-6 w-auto block sm:h-10" viewBox="0 0 397 77" fill="white" >
                     <path d="M17.0625 38.5508H27.9023C30.5586 38.5508 32.2539 37.9102 33.4062 36.7461C34.4766 35.6562 35.1445 34.1641 35.1445 32.5156C35.1445 27.9883 29.918 25.6914 28.0664 27.543C29.918 25.6914 27.6211 20.4727 23.0938 20.4727C21.4453 20.4727 19.9531 21.1367 18.8633 22.207C17.7031 23.3633 17.0586 25.0586 17.0586 27.7109" fill="white"></path>

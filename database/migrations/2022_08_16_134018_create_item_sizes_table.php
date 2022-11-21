@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('item_sizes', function (Blueprint $table) {
-            $table->bigInteger  ('id',true);
-            $table->bigInteger  ('stock')->nullable();
-            $table->string      ('availability', 50);
-            $table->string      ('taglia', 500)->nullable();
-            $table->bigInteger  ('parent_id');
+            $table->bigInteger('id',true);
+            $table->bigInteger('stock')->nullable();
+            $table->string('availability', 50);
+            $table->string('taglia', 500)->nullable();
+            $table->bigInteger('parent_id');
         });
 
 

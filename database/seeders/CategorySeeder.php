@@ -12,8 +12,6 @@ class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
@@ -39,7 +37,6 @@ class CategorySeeder extends Seeder
             if($item['id'] === $item['parent_id']){
                 if (! empty($item['categories'])){
                     $categoryList = $item['categories']['list'];
-
                     if(gettype(array_key_first($categoryList)) === 'integer'){
                         foreach ($categoryList as $list){
                             $categoriesToAdd = $this->getCategories($list, $category_unique);
@@ -56,7 +53,6 @@ class CategorySeeder extends Seeder
         foreach ($categories as &$value){
             $value['name'] = html_entity_decode($value['name']);
         }
-//        htmlEntityDecodeArray($categories, 'name');
         return $categories;
     }
 
@@ -73,13 +69,10 @@ class CategorySeeder extends Seeder
         $previousCategory['link'] = '';
         $previousCategory['id'] = null;
         foreach ($list as $category){
-            $category['name'] = strtolower($category['name']);
-            $category['name'] = str_replace('&amp;', 'e', $category['name']);
-
+            $category['name'] = str_replace('&amp;', 'e',strtolower($category['name']));
+//            $category['name'] = str_replace('&amp;', 'e', $category['name']);
             $category['slug'] = Str::slug($category['name']);
-
             $category['link'] = $previousCategory['link'].'/'.Str::slug($category['name']);
-
             if(! in_array($category['id'], $category_unique)){
                 $category_unique[] = $category['id'];
                 $category['parent_id'] = $previousCategory['id'];

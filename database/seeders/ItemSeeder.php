@@ -35,7 +35,6 @@ class ItemSeeder extends Seeder
                 /**
                  * Remove selected data from array
                  */
-
                 foreach (['gallery', 'categories', 'parent_id'] as $key) {
                     unset($item[$key]);
                 }

@@ -2,18 +2,15 @@
     <div class="container w-[90%] md:w-[85%] lg:w-[88%] mt-5 mx-5 mx-auto lg:mt-[80px] lg:pt-3  ">
         <div class="flex justify-between items-center py-4 md:py-6 ">
             <div>
-
+                <a href="{{ '/' }}" class="text-black font-bold text-xs" title="Home">Home</a>
+                <span class="mx-1 font-normal text-black text-xs">/</span>
                 @if($categories_urls == 1)
-                    <a href="{{ '/' }}" class="text-black font-bold text-xs" title="Home">Home</a>
-                    <span class="mx-1 font-normal text-black text-xs">/</span>
                     <a href="http://127.0.0.1:8000/categoria-prodotto/{{ $path_url[1] }}"
                        class="text-[#E72B6F] font-bold text-sm" >
                         {{ strtoupper(str_replace('-',' ', $path_url[1])) }}
                     </a>
                 @endif
-                @if($categories_urls == 2)
-                    <a href="{{ '/' }}" class="text-black font-bold text-xs" title="Home">Home</a>
-                    <span class="mx-1 font-normal text-black text-xs">/</span>
+                    @if($categories_urls == 2)
                     <a href="http://127.0.0.1:8000/categoria-prodotto/{{ $path_url[1] }}"
                        class="text-sm" >
                         {{ strtoupper(str_replace('-',' ', $path_url[1])) }}
@@ -23,16 +20,13 @@
                             x-data="{ open: false }"
                             class="inline-block">
                         <div class="relative z-5 ">
-                            <span
-                                    x-on:click="open =! open"
-                                    class="relative z-10 ">
+                            <span x-on:click="open =! open"
+                                  class="relative z-10 ">
                                 <div class="flex items-center justify-center">
-                                    <a
-                                            class="text-[#E72B6F] font-bold text-sm cursor-pointer">
+                                    <a class="text-[#E72B6F] font-bold text-sm cursor-pointer">
                                         {{ str_replace('-',' ',strtoupper($path_url[2])) }}
                                     </a>
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ml-1 w-4 h-4 text-gray-800"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>                                </div>
-                            </span>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ml-1 w-4 h-4 text-gray-800"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>                                </div></span>
                             <div
                                     x-show="open"
                                     @click.away="open = false"
@@ -42,24 +36,21 @@
                                     @foreach($c['children'] as $sub)
                                         @if( strtolower($c['name']) === str_replace('-',' ',$path_url[1]))
                                             <div class="flex flex-col bg-white shadow-lg divide-y divide-gray-200">
-                                                <a
-                                                        href="http://127.0.0.1:8000/categoria-prodotto/{{ $path_url[1] }}/{{ str_replace(' ','-',strtolower($sub['name'])) }}"
-                                                        class="font-normal text-base w-full px-5 py-2 hover:text-[#E72B6F] text-black">
+                                                <a href="http://127.0.0.1:8000/categoria-prodotto/{{ $path_url[1] }}/{{ str_replace(' ','-',strtolower($sub['name'])) }}"
+                                                   class="font-normal text-base w-full px-5 py-2 hover:text-[#E72B6F] text-black">
                                                     {{ $sub['name'] }}
-
                                                 </a>
                                             </div>
                                         @endif
                                     @endforeach
                                 @endforeach
+                                <div class="fixed inset-0 bg-black transition duration-150 opacity-0 pointer-events-auto"></div>
                             </div>
-                            <div class="fixed inset-0 bg-black transition duration-150 opacity-0 pointer-events-auto"></div>
                         </div>
                     </div>
-                    @endif
+                @endif
+
                 @if($categories_urls == 3)
-                    <a href="{{ '/' }}" class="text-black font-bold text-xs" title="Home">Home</a>
-                    <span class="mx-1 font-normal text-black text-xs">/</span>
                     <a href="http://127.0.0.1:8000/categoria-prodotto/{{ $path_url[1] }}"
                        class="text-sm" >
                         {{ strtoupper(str_replace('-',' ', $path_url[1])) }}
@@ -70,25 +61,21 @@
                         {{ strtoupper(str_replace('-',' ', $path_url[2])) }}
                     </a>
                     <span class="mx-1 font-normal text-black text-xs">/</span>
-                    <div
-                            x-data="{ open: false }"
-                            class="inline-block">
+
+                    <div x-data="{ open: false }" class="inline-block">
                         <div class="relative z-5 ">
-                            <span
-                                    x-on:click="open =! open"
-                                    class="relative z-10 ">
+                            <span x-on:click="open =! open" class="relative z-10 ">
                                 <div class="flex items-center justify-center">
-                                    <a
-                                            class="text-[#E72B6F] font-bold text-sm cursor-pointer">
+                                    <a class="text-[#E72B6F] font-bold text-sm cursor-pointer">
                                         {{ strtoupper($path_url[3]) }}
                                     </a>
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ml-1 w-4 h-4 text-gray-800">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>                                </div>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
                             </span>
-                            <div
-                                    x-show="open"
-                                    @click.away="open = false"
-                                    class="absolute z-10 transition duration-150 ease-in transform w-max max-w-xs md:max-w-sm top-full left-1/2 -translate-x-1/2 opacity-100 translate-y-0 pointer-events-auto z-40">
+                            <div x-show="open" @click.away="open = false"
+                                 class="absolute z-10 transition duration-150 ease-in transform w-max max-w-xs md:max-w-sm top-full left-1/2 -translate-x-1/2 opacity-100 translate-y-0 pointer-events-auto z-40">
                                 @foreach($categories as $c)
                                     @foreach($c['children'] as $sub)
                                         @foreach($sub['children'] as $s)
@@ -105,7 +92,6 @@
                                     @endforeach
                                 @endforeach
                             </div>
-                            <div class="fixed inset-0 bg-black transition duration-150 opacity-0 pointer-events-auto"></div>
                         </div>
                     </div>
                 @endif

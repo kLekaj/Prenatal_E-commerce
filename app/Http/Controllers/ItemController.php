@@ -63,7 +63,6 @@ class ItemController extends Controller
                     ->where('colore', $color_filter)
                     ->orderBy('price', 'desc')
                     ->whereBetween('price', [$min_price_filter, $max_price_filter])
-
                     ->paginate(12)
                     ->toArray();
             }
@@ -242,9 +241,23 @@ class ItemController extends Controller
             'categories' => Category::tree(),
             'item' => $item,
             'itemSizes' => $itemSizes,
+            'itemPath' => $this->itemPath($item),
 
         ]);
     }
 
+    public function itemPath($item)
+    {
+        $data = [];
+        $categories_urls = 0;
+        foreach (str_split($item['product_type']) as $i) {
+            if ($i == '>') {
+                $categories_urls += 1;
+            }
+        }
+        $data[] = $categories_urls;
+        $data[] = explode(">",$item['product_type']);
+        return $data ;
+    }
 
 }

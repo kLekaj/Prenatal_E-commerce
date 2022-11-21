@@ -1,5 +1,3 @@
-# prenatl-back-end
-
 ## Common setup
 
 Clone the repo and install the dependencies.

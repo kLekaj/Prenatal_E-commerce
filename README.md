@@ -3,7 +3,7 @@
 Clone the repo and install the dependencies.
 
 ```bash
-git clone https://github.com/selimaji/prenatal.git
+git clone https://github.com/selimaji/e-commerce.git
 ```
 
 ```bash

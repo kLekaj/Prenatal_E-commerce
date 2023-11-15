@@ -37,6 +37,7 @@ Use this command if you are in PowerShell on Windows (e.g. in VS Code):
 - [INSERT/UPDATE/DELETE Queries](#insertupdatedelete-queries)
 - [Eloquent](#eloquent)
     - [Recursive Relationships](#recursive-relationships)
+- [Package Conflicts](#package-conflicts)
 - [Lumen](#lumen)
 
 ### SELECT Queries
@@ -181,6 +182,12 @@ $tree = User::from('tree')
 
 If you want to implement recursive relationships, you can use this
 package: [staudenmeir/laravel-adjacency-list](https://github.com/staudenmeir/laravel-adjacency-list)
+
+### Package Conflicts
+
+- `staudenmeir/eloquent-eager-limit`: Replace both packages
+  with [staudenmeir/eloquent-eager-limit-x-laravel-cte](https://github.com/staudenmeir/eloquent-eager-limit-x-laravel-cte)
+  to use them on the same model.
 
 ### Lumen
 
